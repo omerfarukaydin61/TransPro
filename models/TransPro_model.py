@@ -37,12 +37,12 @@ class TransProModel(BaseModel):
                                           opt.n_layers_D, opt.norm, opt.init_type, opt.init_gain, self.gpu_ids)
             # load 2D Generator for HCG module
             self.netG_t = networks_2g_st.generator(opt.ngf).to(self.device)
-            self.netG_t.load_state_dict(torch.load("./pretrain_weights/hcg.pth")) 
+            self.netG_t.load_state_dict(torch.load("./pretrain-weights/hcg.pth")) 
             for p in self.netG_t.parameters():
                 p.requires_grad=False
             # load 2D segmentation model for VPG module
             self.net = UNet(n_channels=1, n_classes=2, bilinear=False)
-            self.net.load_state_dict(torch.load("./pretrain_weights/vpg.pth", map_location=self.device)) 
+            self.net.load_state_dict(torch.load("./pretrain-weights/vpg.pth", map_location=self.device)) 
             self.net.to(device=self.device)
             for p in self.net.parameters():
                 p.requires_grad=False

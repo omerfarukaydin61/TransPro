@@ -1,7 +1,7 @@
 import time
 import os
 from options.test_options import TestOptions
-from data.data_loader import CreateDataLoader
+# from data.data_loader import CreateDataLoader
 from data import create_dataset
 from models import create_model
 #from util.visualizer3d import Visualizer
@@ -36,6 +36,6 @@ for i, data in enumerate(dataset):
     visuals = model.get_current_visuals()
     img_path = model.get_image_paths()
     print('process image... %s' % img_path)
-    save_images(webpage, visuals, img_path)
+    save_images(webpage, visuals, img_path, save_numpy=True, save_png=False, save_fake_only=True)
 
 webpage.save()

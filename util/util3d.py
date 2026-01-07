@@ -48,6 +48,15 @@ def save_image3d(image_numpy, image_path):
         image_pil = Image.fromarray(img_arr)
         fn = image_path+str(i)+".png"
         image_pil.save(fn)
+        
+def save_numpy3d(image_numpy, image_path):
+    """Save 3D image data as numpy array (.npy file)
+    
+    Args:
+        image_numpy: The image data as a numpy array
+        image_path: Path to save the numpy file (without extension)
+    """
+    np.save(image_path + '.npy', image_numpy)
 
 def info(object, spacing=10, collapse=1):
     """Print methods and doc strings.

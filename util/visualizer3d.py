@@ -176,7 +176,7 @@ class Visualizer():
             log_file.write('%s\n' % message)  # save the message
 
 # save image to the disk
-def save_images(webpage, visuals, image_path, width=256):
+def save_images(webpage, visuals, image_path, width=256, save_numpy=False, save_png=True, save_fake_only=False):
     image_dir = webpage.get_image_dir()
     short_path = ntpath.basename(image_path[0])
     name = os.path.splitext(short_path)[0]
@@ -187,10 +187,22 @@ def save_images(webpage, visuals, image_path, width=256):
     links = []
 
     for label, image_numpy in visuals.items():
+        # If save_fake_only is True, only save fake_B
+        if save_fake_only and label != 'fake_B':
+            continue
+            
         image_name = '%s_%s_' % (name, label)
         save_path = os.path.join(image_dir, image_name)
         #print("img numpy size", image_numpy.shape) #256x256x256
-        util.save_image3d(image_numpy, save_path)
+        
+        # Save as PNG files for visualization if save_png is True
+        if save_png:
+            util.save_image3d(image_numpy, save_path)
+        
+        # If save_numpy is True, save as .npy file
+        if save_numpy:
+            numpy_path = os.path.join(image_dir, '%s_%s' % (name, label))
+            util.save_numpy3d(image_numpy, numpy_path)
 
         ims.append(image_name)
         txts.append(label)
